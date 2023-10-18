@@ -1,0 +1,8 @@
+server:
+  port: 8081
+nebula:
+  cluster:
+    address: 111.13.155.85:9669
+  userName: root
+  password: nebula
+  space: my_test_space
