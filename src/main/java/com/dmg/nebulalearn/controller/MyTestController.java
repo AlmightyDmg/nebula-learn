@@ -1,9 +1,12 @@
 package com.dmg.nebulalearn.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import com.dmg.nebulalearn.model.vertex.Country;
 import com.dmg.nebulalearn.service.MyTestServiceImpl;
+import com.vesoft.nebula.client.graph.data.ResultSet;
 import io.github.anyzm.graph.ocean.domain.impl.QueryResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +34,13 @@ public class MyTestController {
     }
 
     @GetMapping("/getAllCountry")
-    public QueryResult getAllCountry(){
-        return myTestService.getAllCountry();
+    public List<Country> getAllCountry(){
+        List<Country> allCountry = myTestService.getAllCountry();
+        return allCountry;
+    }
+
+    @GetMapping("/getSubGraph")
+    public void getSubGraph(){
+        myTestService.getSubGraph();
     }
 }

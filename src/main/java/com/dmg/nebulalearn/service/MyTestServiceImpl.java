@@ -1,7 +1,9 @@
 package com.dmg.nebulalearn.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import com.dmg.nebulalearn.model.edge.OrgToOrg;
 import com.dmg.nebulalearn.model.vertex.Country;
@@ -90,13 +92,19 @@ public class MyTestServiceImpl {
      * @param
      * @return java.lang.String
      */
-    public QueryResult getAllCountry() {
-        QueryResult records;
+    public List<Country> getAllCountry() {
+        List<Country> countries;
         try {
-            VertexQuery vertexQuery = NebulaVertexQuery.build()
-                    .fetchPropOn(Country.class,"CN")
-                    .yield(Country.class,"code","name");
-            records = nebulaGraphMapper.executeQuery(vertexQuery);
+            //根据code查询国家
+            //List<Country> countries = nebulaGraphMapper.fetchVertexTag(Country.class,"CN");
+
+
+            countries = nebulaGraphMapper.executeQuerySql("lookup on country yield properties(vertex).code as code,properties(vertex).name as name", Country.class);
+
+//            VertexQuery vertexQuery = NebulaVertexQuery.build()
+//                    .fetchPropOn(Country.class,"CN")
+//                    .yield(Country.class,"code","name");
+//            records = nebulaGraphMapper.executeQuery(vertexQuery);
 
             //records = nebulaGraphMapper.executeQuerySql("match (v:country) return v");
         } catch (ClientServerIncompatibleException e) {
@@ -107,8 +115,29 @@ public class MyTestServiceImpl {
             throw new RuntimeException(e);
         } catch (IOErrorException e) {
             throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
         }
 
-        return records;
+        return countries;
+    }
+
+    public void getSubGraph() {
+        try {
+            QueryResult records = nebulaGraphMapper.executeQuerySql("get subgraph with prop 100 steps from \"US\" yield vertices as nodes, edges as relations");
+            System.out.println(records);
+        } catch (ClientServerIncompatibleException e) {
+            throw new RuntimeException(e);
+        } catch (AuthFailedException e) {
+            throw new RuntimeException(e);
+        } catch (NotValidConnectionException e) {
+            throw new RuntimeException(e);
+        } catch (IOErrorException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.dmg.nebulalearn.model.vertex;
 
-import javax.persistence.Id;
 
 import io.github.anyzm.graph.ocean.annotation.GraphProperty;
 import io.github.anyzm.graph.ocean.annotation.GraphVertex;

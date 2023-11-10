@@ -33,11 +33,11 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>
+       <dependency>
             <groupId>com.vesoft</groupId>
             <artifactId>client</artifactId>
             <version>3.0.0</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>io.github.anyzm</groupId>
